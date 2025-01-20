@@ -211,8 +211,63 @@ brf_part2 <- brf_part2 |>
   )
 ```
 
-##Phase 2: Exploratory Data Analysis and Visualization
+## Phase 2: Exploratory Data Analysis and Visualization
 
 I completed exploratory analyses for each of the 4 variables by creating scatterplot visualizations with ggplot2. I also included isualizations that incorporates a combination of variables within one plot. 
 
+#INCOME3
+```r
+ggplot(brf_part2, aes(x = "", y = INCOME3)) + 
+  geom_boxplot() +
+  labs(title = "Boxplot of INCOME3", y = "INCOME3") +
+  theme_minimal()
+```
 
+#MAXdRNKs
+```r
+ggplot(brf_part2, aes(x = "", y = MAXDRNKS)) + 
+  geom_boxplot() +
+  labs(title = "Boxplot of MAXDRNKS", y = "MAXDRNKS") +
+  theme_minimal()
+```
+
+#DKDAY
+```r
+ggplot(brf_part2, aes(x = "", y = DKDAY)) + 
+  geom_boxplot() +
+  labs(title = "Boxplot of DKDAY", y = "DKDAY") +
+  theme_minimal()
+```
+
+#BIRTHSEX
+
+```r
+ggplot(brf_part2, aes(x = "", y = BIRTHSEX)) + 
+  geom_boxplot() +
+  labs(title = "Boxplot of BIRTHSEX", y = "BIRTHSEX") +
+  theme_minimal()
+```
+
+#Boxplot of MAXDRNKS by Income"
+```r
+ggplot(brf_part2, aes(x = factor(INCOME3), y = MAXDRNKS)) +
+  geom_boxplot() +
+  labs(title = "Boxplot of MAXDRNKS by Income",
+       x = "INCOME3",
+       y = "MAXDRNKS") +
+  theme_minimal()
+```
+
+#Boxplot of MAXDRNKS by Birth Sex
+```r
+ggplot(brf_part2, aes(x = factor(BIRTHSEX), y = MAXDRNKS)) +
+  geom_boxplot() +
+  labs(title = "Boxplot of MAXDRNKS by Birth Sex",
+       x = "BIRTHSEX",
+       y = "MAXDRNKS") +
+  theme_minimal()
+```
+
+## Phase 3: Sharing insights from the analysis
+
+Looking at the "Boxplot of MAXDRNKS by Income", I can see that highest values for max drinks is from middle- class people within the range of income $35,000 - $100,00.  When looking at "Boxplot of MAXDRNKS by Birth Sex" the data shows a relatively slight difference in the median, showing 1 (male) higher. The person who drank the most is a a male at birth. I am surprised at these findings so far because of the ostensibly insignificant of the relationship between birth sex and income. Lowest level of income does show the highest median of max drinks.  It will be interesting to further explore and see the highest predictor variable between sex and income.
