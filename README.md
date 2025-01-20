@@ -215,6 +215,7 @@ brf_part2 <- brf_part2 |>
 
 I completed exploratory analyses for each of the 4 variables by creating scatterplot visualizations with ggplot2. I also included isualizations that incorporates a combination of variables within one plot. 
 
+### 2.1 Boxplots
 #INCOME3
 ```r
 ggplot(brf_part2, aes(x = "", y = INCOME3)) + 
@@ -271,3 +272,63 @@ ggplot(brf_part2, aes(x = factor(BIRTHSEX), y = MAXDRNKS)) +
 ## Phase 3: Sharing insights from the analysis
 
 Looking at the "Boxplot of MAXDRNKS by Income", I can see that highest values for max drinks is from middle- class people within the range of income $35,000 - $100,00.  When looking at "Boxplot of MAXDRNKS by Birth Sex" the data shows a relatively slight difference in the median, showing 1 (male) higher. The person who drank the most is a a male at birth. I am surprised at these findings so far because of the ostensibly insignificant of the relationship between birth sex and income. Lowest level of income does show the highest median of max drinks.  It will be interesting to further explore and see the highest predictor variable between sex and income.
+
+   ###  3.1 Descriptive Stats
+```r
+summary (brf_part2)
+
+Descript1 <- describe(brf_part2)
+```
+   ### Descriptive Stats Insights
+DKDAY: Has a normal distribution with 1.61 sd. the mean and median are close which can indicate even distribution. The kurtosis and skew indicate lighter tails.  This variable has been slightly trimmed (lower fence) and has min of 1 and max of 7, after the removal of outliers.
+
+MAXDRINKS: Median shows that half of the people reported having 3 drinks or less on any occasion in the last 30 days.The mean is greater than the medium which shows some people having considerably more drinks. Max drinks consumed is 13 and min is 1.  mad reveals the data is well spread. Sd is high at 2.66 even though there is a 3.53 trimmed. 
+
+BIRTHSEX: The mean of 1.43 shows slightly higher number of males.  The sd of .49 shows there is a fairly good balance between male and female.
+
+INCOME3: The median being higher than the mean indicates there are more higher income individuals. A slight left- skew, but is still relatively diverse. 
+
+   ### 3.2 Regression Predictions
+
+I ran 2 different linear regression models predicting on the DKDAY variable using icome and birth sex as predictors. Used a linear regression model
+```r
+#convert birthsex as factor
+brf_part2$BIRTHSEX <- as.factor(brf_part2$BIRTHSEX)
+
+#Fit the linear regression model for DKDAY using birthsex as predictor
+model_BSex <- lm(DKDAY ~ BIRTHSEX, data = brf_part2)
+
+#Fit the linear regression model for DKDAY using income3 as predictor
+model_Income <- lm(DKDAY ~ INCOME3, data = brf_part2)
+
+#summarize the models
+summary_modSex <- summary(model_BSex)
+summary_modIncome <- summary(model_Income)
+
+#Get the AIC for models
+aic_modelS <- AIC(model_BSex)
+aic_modelI <- AIC(model_Income)
+
+model_SexMax <- lm(DKDAY ~ BIRTHSEX + MAXDRNKS, data = brf_part2)
+
+summary_SexMax <- summary(model_SexMax)
+aic_modelSM <- AIC(model_SexMax)
+```
+
+   ## 3.3 Regression debrief and recommendations for further investigation
+Which is the strongest predictor for the most alcohol consumption for individuals- sex or income? The results indicate that sex is a stronger predictor than income on alcohol comsumption levels.  2 Ways this determination was made:
+
+1. The stronger linear regression model (model_BSex) using birth sex  as a predictor, shows a lower AIC of 72984.89.
+2. The stronger linear regression model(model_BSex) using birth sex as a predictor, shows a higher adjusted r value of 0.004868.
+
+Although birth sex is stronger than income as a predictor, the adjusted r value reveals that it only explains a small fraction of the variance.  Adding a more relevant predictor would likely help strengthen the model fit.
+
+After creating a new model (model_SexMax) to include MAXDRNKS:
+Adding in MAXDRNKS to the model lowered the AIC to 72867.99
+Adding in MAXDRNKS to the model increased the adjusted r value to 0.01094
+
+These findings show as expected, that the model with 2 predictors is a better fit.  
+
+
+
+
