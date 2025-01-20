@@ -1,11 +1,5 @@
 # Alcohol-Consumption-by-Income-and-Birth-Sex
 
-## Table of Contents
-   - [Project Overview](#project-overview)
-   - [Data Sources](#data-sources)
-   - [Tools](#tools)
-   - [Phase 1: Cleaning and preparing the data](#phase-1:-cleaning-and-preparing-the-data)
-
 ## Project Overview
 This exploratory analysis seeks to examine the relationship between income, birth sex, and alcohol consumption levels. The goal is to uncover patterns and correlations that may provide valuable insights into how these factors influence drinking behaviors. Specifically, the analysis will investigate whether income levels or birth sex are associated with variations in alcohol consumption, including frequency and quantity of consumption.
 
@@ -29,6 +23,8 @@ noninstitutionalized adult population (≥ 18 years) residing in the United Stat
 ## Tools
 RStudio [Download_here] (https://posit.co/downloads/)
 
+## Phases
+
 I have divided the project into 3 phases: 
 
 Phase 1: Cleaning and preparing the data.
@@ -40,15 +36,14 @@ Let’s get started!
 
 ## Phase 1: Cleaning and preparing the data
 
-   ## 1.1. Loading packages and data
-### Load packages for analysis:
+   ### 1.1. Loading packages and data for analysis
+
 
 ``` r
 library(tidyverse)
 library(psych)
 library(lm.beta)
-```
-### Load dataset and assign name: 
+``` 
 
 ``` r
 brf <- read_csv("brfss2021.csv", show_col_types = FALSE)
@@ -213,7 +208,7 @@ brf_part2 <- brf_part2 |>
 
 ## Phase 2: Exploratory Data Analysis and Visualization
 
-I completed exploratory analyses for each of the 4 variables by creating scatterplot visualizations with ggplot2. I also included isualizations that incorporates a combination of variables within one plot. 
+I completed exploratory analyses for each of the 4 variables by creating boxplot visualizations with ggplot2. I also included isualizations that incorporates a combination of variables within one plot. 
 
 ### 2.1 Boxplots
 #INCOME3
@@ -259,6 +254,8 @@ ggplot(brf_part2, aes(x = factor(INCOME3), y = MAXDRNKS)) +
   theme_minimal()
 ```
 
+![Maxdrnks by Income](https://github.com/user-attachments/assets/79a4b5a4-9a1c-4a5b-8c33-28e574d12f97)
+
 #Boxplot of MAXDRNKS by Birth Sex
 ```r
 ggplot(brf_part2, aes(x = factor(BIRTHSEX), y = MAXDRNKS)) +
@@ -268,6 +265,7 @@ ggplot(brf_part2, aes(x = factor(BIRTHSEX), y = MAXDRNKS)) +
        y = "MAXDRNKS") +
   theme_minimal()
 ```
+![Maxdrks by Birth Sex](https://github.com/user-attachments/assets/0e77aefb-bc21-400d-a85f-294b4299d881)
 
 ## Phase 3: Sharing insights from the analysis
 
@@ -279,7 +277,14 @@ summary (brf_part2)
 
 Descript1 <- describe(brf_part2)
 ```
-   ### Descriptive Stats Insights
+### Summary
+![Summary](https://github.com/user-attachments/assets/0708cc0d-c7a3-4f71-83e4-f57e09de0797)
+
+### Describe
+
+![Description](https://github.com/user-attachments/assets/146dfc1d-98e6-4b54-83e0-bcf0d25a9684)
+
+   ### 3.2 Descriptive Stats Insights
 DKDAY: Has a normal distribution with 1.61 sd. the mean and median are close which can indicate even distribution. The kurtosis and skew indicate lighter tails.  This variable has been slightly trimmed (lower fence) and has min of 1 and max of 7, after the removal of outliers.
 
 MAXDRINKS: Median shows that half of the people reported having 3 drinks or less on any occasion in the last 30 days.The mean is greater than the medium which shows some people having considerably more drinks. Max drinks consumed is 13 and min is 1.  mad reveals the data is well spread. Sd is high at 2.66 even though there is a 3.53 trimmed. 
@@ -288,7 +293,7 @@ BIRTHSEX: The mean of 1.43 shows slightly higher number of males.  The sd of .49
 
 INCOME3: The median being higher than the mean indicates there are more higher income individuals. A slight left- skew, but is still relatively diverse. 
 
-   ### 3.2 Regression Predictions
+   ### 3.3 Regression Predictions
 
 I ran 2 different linear regression models predicting on the DKDAY variable using icome and birth sex as predictors. Used a linear regression model
 ```r
@@ -315,7 +320,7 @@ summary_SexMax <- summary(model_SexMax)
 aic_modelSM <- AIC(model_SexMax)
 ```
 
-   ## 3.3 Regression debrief and recommendations for further investigation
+   ### 3.4 Regression debrief and recommendations for further investigation
 Which is the strongest predictor for the most alcohol consumption for individuals- sex or income? The results indicate that sex is a stronger predictor than income on alcohol comsumption levels.  2 Ways this determination was made:
 
 1. The stronger linear regression model (model_BSex) using birth sex  as a predictor, shows a lower AIC of 72984.89.
@@ -330,5 +335,5 @@ Adding in MAXDRNKS to the model increased the adjusted r value to 0.01094
 These findings show as expected, that the model with 2 predictors is a better fit.  
 
 
-
+Thank you very much!!!
 
